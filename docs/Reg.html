@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aether - Регистрация</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Reg.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 aria-label="Aether">Aether</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">На главную</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-card">
+                <div class="auth-logo">
+                    <img src="images/Pc_logo_mini.png" alt="Aether Logo" class="logo-image">
+                </div>
+                
+                <h2 class="section-title">Создать аккаунт</h2>
+                
+                <form class="auth-form">
+                    <div class="form-group">
+                        <label for="nickname">Никнейм (публичное имя)</label>
+                        <input type="text" id="nickname" required 
+                            class="input-field" 
+                            placeholder="Как вас будут видеть другие"
+                            maxlength="20">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login">Логин аккаунта</label>
+                        <input type="text" id="login" required
+                            class="input-field"
+                            placeholder="Уникальное имя для входа"
+                            maxlength="15"
+                            pattern="[a-zA-Z0-9_]+"
+                            title="Только латинские буквы, цифры и подчеркивание">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Пароль</label>
+                        <input type="password" id="password" required
+                            class="input-field"
+                            placeholder="Не менее 8 символов"
+                            minlength="8">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">Подтверждение пароля</label>
+                        <input type="password" id="confirm-password" required
+                            class="input-field"
+                            placeholder="Повторите пароль">
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">Я подтверждаю, что ознакомился с <a href="#" class="terms-link">анонимной политикой конфиденциальности</a> и принимаю условия использования сервиса</label>
+                    </div>
+
+                    <button type="submit" class="btn auth-btn">Зарегистрироваться</button>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Уже зарегистрированы? <a href="Login.html" class="auth-link">Войти в аккаунт</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.auth-card, .form-group, .section-title, .auth-logo').forEach(el => observer.observe(el));
+
+    // Валидация полей
+    document.querySelectorAll('.input-field').forEach(input => {
+        input.addEventListener('input', function() {
+            this.classList.add('touched');
+        });
+        
+        input.addEventListener('blur', function() {
+            this.classList.add('touched');
+        });
+    });
+
+    document.querySelector('form').addEventListener('submit', function(e) {
+        document.querySelectorAll('.input-field').forEach(input => input.classList.add('touched'));
+        
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        
+        if (password !== confirmPassword) {
+            e.preventDefault();
+            alert('Пароли не совпадают!');
+        }
+    });
+    </script>
+</body>
+</html>
